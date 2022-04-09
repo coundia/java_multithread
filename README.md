@@ -15,4 +15,9 @@
 - gerer par le JVM
 
 
+
+#Interface avec les threads
+- une objet partage par deux thread
+
+
 ![link]https://www.lri.fr/~anab/teaching/DevLog/cours4-threads.pdf
