@@ -14,29 +14,39 @@ public class TransactionService implements Runnable, ITransaction {
     public void run() {
 
         Log.info("**** run () : "+getReference()+"@"+Thread.currentThread().getName());
-        faire();
-        debiter(getReference());
-        notifier(getUser());
+        try {
+            faire();
+            debiter(getReference());
+            notifier(getUser());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
-    public boolean faire() {
+    public boolean faire() throws InterruptedException {
 
-        Log.info("**** faire () : "+getReference()+"@"+Thread.currentThread().getName());
+
+        Log.info("**** faire () : "+getReference()+"@"+Thread.currentThread().getName()+" ...");
+        Thread.sleep(1000);
+
         return false;
     }
 
     @Override
-    public boolean debiter(String compte) {
+    public boolean debiter(String compte) throws InterruptedException {
 
-        Log.info("**** debiter () :"+getReference()+"@"+Thread.currentThread().getName());
+        Log.info("**** debiter () :"+getReference()+"@"+Thread.currentThread().getName()+" ... ");
+        Thread.sleep(1000);
         return false;
     }
 
     @Override
-    public boolean notifier(String user) {
+    public boolean notifier(String user) throws InterruptedException {
 
-        Log.info("**** notifier () : "+getReference()+"@"+Thread.currentThread().getName());
+        Log.info("**** notifier () : "+getReference()+"@"+Thread.currentThread().getName()+" ... ");
+        Thread.sleep(1000);
         return false;
     }
 

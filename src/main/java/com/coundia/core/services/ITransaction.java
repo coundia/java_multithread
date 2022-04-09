@@ -6,7 +6,7 @@ package com.coundia.core.services;
  * @project java_multithread
  */
 public interface ITransaction {
-    boolean faire();
-    boolean debiter(String compte);
-    boolean notifier(String user);
+    boolean faire() throws InterruptedException;
+    boolean debiter(String compte) throws InterruptedException;
+    boolean notifier(String user) throws InterruptedException;
 }
