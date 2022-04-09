@@ -1,7 +1,4 @@
-import com.coundia.tuto.Hello;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Papa Coundia
@@ -9,8 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @project java_junit
  */
  class TestHello {
+
+
     @Test
    void testHello(){
-        assertEquals("Hello", Hello.sayHello());
+
     }
 }

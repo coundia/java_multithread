@@ -1,4 +1,6 @@
-import com.coundia.tuto.Hello;
+import com.coundia.core.logger.Log;
+import com.coundia.core.services.TransactionService;
+
 
 
 /**
@@ -9,7 +11,26 @@ import com.coundia.tuto.Hello;
 
 
     public class Main {
-        public static void main(String args[]) {
-           Hello.sayHello();
+
+//    private static final Logger log = LogManager.getLogger(Main.class);
+
+        public static void main(String args[]) throws InterruptedException {
+           Log.info("***** Debut traitement ***** "+Thread.currentThread().getName());
+           //creer deux transactions
+            TransactionService trx1 = new TransactionService("t1","user1");
+            TransactionService trx2 = new TransactionService("t2","user2");
+            //creer deux thread
+            Thread thread1  = new Thread(trx1);
+            Thread thread2  = new Thread(trx2);
+            //demarrer les threads //parallele
+            thread1.start();
+            thread2.start();
+            //terminer thread1 puis thread2
+            thread1.join(); //attendre  la fin
+            thread2.join();  //attendre  la fin
+            //fin transaction
+
+            Log.info("***** Fin traitement  . ***** "+Thread.currentThread().getName());
+
         }
     }
