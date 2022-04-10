@@ -3,13 +3,14 @@ package com.coundia.core.calculator;
 import com.coundia.core.logger.Log;
 
 import java.util.concurrent.Callable;
+import java.util.concurrent.RecursiveTask;
 
 /**
  * @author Papa Coundia
  * @created 10/04/2022 / 01:12
  * @project java_multithread
  */
-public class Calcul implements Callable<Integer> {
+public class Calcul extends RecursiveTask<Integer> implements Callable<Integer>  {
     int [] donnees;
     int debut;
     int fin;
@@ -50,5 +51,10 @@ public class Calcul implements Callable<Integer> {
             somme += donnees[i];
         }
         return somme;
+    }
+
+    @Override
+    protected Integer compute() {
+        return null;
     }
 }

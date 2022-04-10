@@ -1,4 +1,5 @@
 import com.coundia.core.calculator.Calcul;
+import com.coundia.core.calculator.CalculRTask;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.*;
@@ -44,6 +45,72 @@ public class TestTraitementParallele {
         long fin =  System.currentTimeMillis();
         System.out.println("Somme  : "+somme);
         System.out.println("***** Fin. : "+ String.valueOf(fin-debut)+" millis ");
+
+    }
+
+    @Test
+    void testForJoinPool() throws ExecutionException, InterruptedException {
+        long debut =  System.currentTimeMillis();
+        System.out.println("***** Debut testForJoinPool  *** ");
+        //bloc debut ***
+        int [] tab = IntStream.range(0,11).toArray();
+        ForkJoinPool fjp = new ForkJoinPool();
+        CalculRTask calculTask=new CalculRTask(tab,0,10);
+        int som=fjp.invoke(calculTask);
+        //bloc fin ***
+        long fin =  System.currentTimeMillis();
+        System.out.println("***** somme :  "+String.valueOf(som));
+        System.out.println("***** Fin. : "+ String.valueOf(fin-debut)+" millis ");
+    }
+
+
+    @Test
+    void   TestCollectionConcurrent(){
+        BlockingQueue bq =new ArrayBlockingQueue(3);
+        //producteur
+        new Thread(
+                ()->{
+                    for(int i=0 ; i<10;i++){
+                        try {
+                            System.out.println("***** Produire  *** ");
+                            bq.put(i);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    System.out.println("***** Fini de production  *** ");
+                }
+        ).start();
+        //consommateur
+        new Thread(
+                ()->{
+                    for(int i=0 ; i<5;i++){
+                        try {
+                            System.out.println("***** Consommateur  *** ");
+                            System.out.println(bq.take());
+
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    System.out.println("***** Fini de consommation  *** ");
+                }
+        ).start();
+        //consommateur
+        new Thread(
+                ()->{
+                    for(int i=0 ; i<5;i++){
+                        try {
+                            System.out.println("***** Consommateur  *** ");
+                            System.out.println(bq.take());
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    System.out.println("***** Fini de consommation  *** ");
+                }
+        ).start();
+        //prevoir les blocages au besoin
 
     }
 }
