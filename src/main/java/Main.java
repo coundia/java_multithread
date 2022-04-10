@@ -38,6 +38,8 @@ import com.coundia.core.services.TransactionService;
 
             Log.info("***** Fin traitement  . ***** "+Thread.currentThread().getName());
             Log.info("***** Etat Compte   . ***** \n "+compte);
+            Log.info("***** Etat Compte trx1  . ***** \n "+trx1.getCompte());
+            Log.info("***** Etat Compte trx2  . ***** \n "+trx2.getCompte());
 
         }
     }

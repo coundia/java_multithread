@@ -2,6 +2,9 @@ package com.coundia.core.services;
 
 import com.coundia.core.logger.Log;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 /**
  * @author Papa Coundia
  * @created 09/04/2022 / 21:52
@@ -36,14 +39,24 @@ public class TransactionService implements Runnable {
 
         return false;
     }
-
-
-    public boolean debiter() throws InterruptedException {
-        Log.info("**** debiter () :"+getReference()+"@"+Thread.currentThread().getName()+" ... ");
-        Thread.sleep(1000);
-        //debiter le compte
-        this.compte.setSolde(this.compte.getSolde()-this.getMontant());
-        return false;
+    //creer un lock
+    private Lock verrou =new ReentrantLock();
+    /****
+     *
+     * @return
+     * @throws InterruptedException
+     */
+    public   void debiter() throws InterruptedException {
+        //poser un verrou
+        verrou.lock();
+        try {
+            Log.info("**** debiter () :" + getReference() + "@" + Thread.currentThread().getName() + " ... ");
+            Compte c = new Compte(this.compte.getNumero(), this.compte.getSolde() - this.getMontant());
+             Log.info("***** debiter =>> Etat Compte    . ***** \n " + c);
+            this.setCompte(c);
+        }finally{
+            verrou.unlock();
+        }
     }
 
 
